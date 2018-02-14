@@ -12,22 +12,6 @@ def parse_command_line_args():
     return parser.parse_args()
 
 
-def is_digit(x):
-    try:
-        float(x)
-        return True
-    except ValueError:
-        return False
-
-
-def find_errors_in_input(price):
-    parser = argparse.ArgumentParser()
-    if str(price).isalpha():
-        parser.error("Please only enter numbers")
-    if not is_digit(price):
-        parser.error("Please enter only numeric digits")
-    return True
-
 def count_banknotes(banknotes):
     if len(banknotes) > 3:
         banknotes = int(float(banknotes))
@@ -38,8 +22,9 @@ def count_banknotes(banknotes):
             banknotes = banknotes[1:]
     return banknotes
 
+
 def count_coins(price):
-    coins = os.path.splitext(price)[1][1:]
+    coins = os.path.splitext(str(price))[1][1:]
     if coins is "":
         return False
     if all([int(coins)]) == 0:
@@ -52,17 +37,19 @@ def count_coins(price):
             else:
                 break
         cents = "".join(coins_list)
-    return "," + cents
+    return "{}{}".format(",", cents)
 
 
 def format_price(price):
     banknotes, coins = count_banknotes(price), count_coins(price)
-    return banknotes if coins is False else banknotes + coins
+    return banknotes if coins is False else "{}{}".format(banknotes, coins)
 
 
 if __name__ == "__main__":
     args = parse_command_line_args()
-
-    if find_errors_in_input(args.price):
-        banknotes, coins = count_banknotes(args.price), count_coins(args.price)
-        print(format_price(args.price))
+    try:
+        if bool(float(args.price)):
+            banknotes, coins = count_banknotes(args.price), count_coins(args.price)
+            print(format_price(args.price))
+    except ValueError:
+        exit("Enter a float of numeric digits")
