@@ -5,38 +5,38 @@ from format_price import format_price
 class PriceFormattingTestCase(unittest.TestCase):
 
     def test_solves_trillions(self):
-        input_price = 1000000000000000000.000000
+        input_price = "1000000000000000000.0000"
         output_price = "1 000 000 000 000 000 000"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_solves_millions(self):
-        input_price = 15999777.000000
+        input_price = "15999777.000000"
         output_price = "15 999 777"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_solves_hundreds_thousands(self):
-        input_price = 555777.000000
+        input_price = "555777.000000"
         output_price = "555 777"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_solves_thousands(self):
-        input_price = 5678.000000
+        input_price = "5678.000"
         output_price = "5 678"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_solves_hundreds(self):
-        input_price = 678.000000
+        input_price = "678.000000"
         output_price = "678"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_solves_cents(self):
-        input_price = 123456.00345000000000
-        output_price = "123 456,0"
+        input_price = "123456.00345000000000"
+        output_price = "123 456,00"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
