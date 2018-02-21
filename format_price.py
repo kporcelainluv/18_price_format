@@ -12,21 +12,22 @@ def parse_command_line_args():
 
 
 def format_price(price):
-    parser = argparse.ArgumentParser()
-    if str(price).isalpha():
-        parser.error("Please only enter numbers")
-    if not bool(type(price)):
-        parser.error("Please enter only numeric digits")
-
-    price = float(price)
-    if price % 1 == 0:
-        price = '{:,.0f}'.format(price).replace(",", " ")
-        return price
-    else:
-        price = "{:,.2f}".format(float(price)).replace(",", " ").replace(".", ",")
-        return price
+    try:
+        price = float(price)
+        if price % 1 == 0:
+            price = '{:,.0f}'.format(price).replace(",", " ")
+            return price
+        else:
+            price = "{:,.2f}".format(float(price)).replace(",", " ")
+            price = price.replace(".", ",").replace(',00', '')
+            return price
+    except ValueError or TypeError:
+        return None
 
 
 if __name__ == "__main__":
     args = parse_command_line_args()
-    print(format_price(args.price))
+    if format_price(args.price) is not None:
+        print(format_price(args.price))
+    else:
+        print("Enter numeric digits only")

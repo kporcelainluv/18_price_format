@@ -36,39 +36,39 @@ class PriceFormattingTestCase(unittest.TestCase):
 
     def test_solves_cents(self):
         input_price = "123456.00345000000000"
-        output_price = "123 456,00"
+        output_price = "123 456"
+        formatted_price = format_price(input_price)
+        self.assertEqual(formatted_price, output_price)
+
+    def test_solves_cents(self):
+        input_price = "123456.365"
+        output_price = "123 456,37"
         formatted_price = format_price(input_price)
         self.assertEqual(formatted_price, output_price)
 
     def test_string_of_letters(self):
         input_price = "hello, world"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
     def test_string_of_numbers_and_a_letter(self):
         input_price = "1234567k.0000000"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
     def test_list_of_prices(self):
         input_price = "['12345.000', '123456.000', '123456.000']"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
     def test_touple_of_prices(self):
         input_price = "('12345.000', '123456.000', '123456.000')"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
     def test_dict_of_prices(self):
         input_price = "{1: '12345.000', 2: '123456.000', 3: '123456.000'}"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
     def test_list_of_types(self):
         input_price = "[10, False, [], {}]"
-        with self.assertRaises(ValueError):
-            format_price(input_price)
+        self.assertIsNone(format_price(input_price))
 
 
 if __name__ == '__main__':
