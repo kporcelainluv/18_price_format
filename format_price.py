@@ -13,16 +13,17 @@ def parse_command_line_args():
 
 def format_price(price):
     try:
-        if type(price) is float:
-            if price % 1 == 0:
-                price = '{:,.0f}'.format(price).replace(",", " ")
-                return price
-            else:
-                price = "{:,.2f}".format(float(price)).replace(",", " ")
-                price = price.replace(".", ",").replace(',00', '')
-                return price
+        price = float(price)
     except ValueError or TypeError:
         return None
+
+    if price % 1 == 0:
+        price = "{:,.0f}".format(price).replace(",", " ")
+        return price
+    else:
+        price = "{:,.2f}".format(price).replace(",", " ")
+        price = price.replace(".", ",").replace(",00", "")
+        return price
 
 
 if __name__ == "__main__":
